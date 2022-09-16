@@ -116,4 +116,4 @@ public class ProductController {
                                                       @RequestParam(name = "productId") Integer productId) {
         return new ResponseEntity<>("No method body for now.", HttpStatus.OK);
     }
-}`
+}
