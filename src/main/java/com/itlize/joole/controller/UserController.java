@@ -13,18 +13,22 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @GetMapping("/get-users")
     public List<User> readUsers() {
         return service.findAll();
     }
 
-    @GetMapping("/get-user")
-    public User readUserById(@RequestParam("user-id") Integer userId) {
+    @GetMapping("/users/{id}")
+    public User readUserById(@PathVariable("id") Integer userId) {
         return service.findById(userId);
     }
 
-    @PostMapping("/post-user")
-    public User createUser(@RequestParam("name") String userName, @RequestParam("password") String password, @RequestParam("first-name") String firstName, @RequestParam("last-name") String lastName, @RequestParam("email-address") String emailAddress, @RequestParam("phone-number") String phoneNumber) {
+    @PostMapping("/users")
+    public User createUser(@RequestParam("name") String userName,
+                           @RequestParam("password") String password,
+                           @RequestParam("firstName") String firstName,
+                           @RequestParam("lastName") String lastName,
+                           @RequestParam("emailAddress") String emailAddress,
+                           @RequestParam("phoneNumber") String phoneNumber) {
         User user = new User();
         user.setName(userName);
         user.setPassword(password);
@@ -35,10 +39,10 @@ public class UserController {
         return service.save(user);
     }
 
-    @PutMapping("/put-user-name")
+    @PutMapping("/users")
     public User updateUser(@RequestParam("id") Integer id,
-                           @RequestParam("first-name") String firstName,
-                           @RequestParam("last-name") String lastName) {
+                           @RequestParam("firstName") String firstName,
+                           @RequestParam("lastName") String lastName) {
         User user = service.findById(id);
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -47,8 +51,8 @@ public class UserController {
         return service.save(user);
     }
 
-    @DeleteMapping("/delete-user")
-    public void deleteUserById(@RequestParam("id") Integer id) {
+    @DeleteMapping("/users/{id}")
+    public void deleteUserById(@PathVariable("id") Integer id) {
         service.deleteById(id);
     }
 }
